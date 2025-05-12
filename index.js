@@ -37,7 +37,7 @@ app.post("/sendmail", async function(req,res){
 
         if (!user || !pass) {
             console.log("Missing user or pass in MongoDB data");
-            console.log("check error")
+      
             return res.send(false);
         }
      
