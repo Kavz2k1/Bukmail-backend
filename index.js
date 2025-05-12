@@ -4,6 +4,13 @@ const cors = require("cors")
 const app = express()
 const mongoose = require("mongoose")
 app.use(express.json())
+
+const corsOptions = {
+    origin: "https://bulkmail-frontend-blush.vercel.app",
+    methods: ["POST"],
+    allowedHeaders: ["Content-Type"],
+  };
+
 app.use(cors(corsOptions))
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "https://bulkmail-frontend-blush.vercel.app/"); // update to match the domain you will make the request from
@@ -127,9 +134,11 @@ app.post("/sendmail", async function(req,res){
 //     }
 //     })
     
-app.listen(5000, function()
-{
-    console.log("Server started at 5000...");
-    console.log("success");
+// app.listen(5000, function()
+// {
+//     console.log("Server started at 5000...");
+//     console.log("success");
     
-})
+// })
+module.exports = app;
+module.exports.handler = serverless(app);
