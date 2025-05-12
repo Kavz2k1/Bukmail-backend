@@ -4,7 +4,11 @@ const cors = require("cors")
 const app = express()
 const mongoose = require("mongoose")
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: "https://bulkmail-frontend-blush.vercel.app",
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true
+  }))
 
 
 mongoose.connect("mongodb+srv://rajkaviya121:rajkaviya2@cluster0.v7anyu3.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(function(){
@@ -124,5 +128,6 @@ app.post("/sendmail", async function(req,res){
 app.listen(5000, function()
 {
     console.log("Server started at 5000...");
+    console.log("success");
     
 })
