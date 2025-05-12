@@ -4,12 +4,12 @@ const cors = require("cors")
 const app = express()
 const mongoose = require("mongoose")
 app.use(express.json())
-app.use(cors({
-    origin: "https://bulkmail-frontend-blush.vercel.app",
-    methods: ["GET", "POST", "OPTIONS"],
-    credentials: true
-  }))
-
+app.use(cors(corsOptions))
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://bulkmail-frontend-blush.vercel.app/"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 mongoose.connect("mongodb+srv://rajkaviya121:rajkaviya2@cluster0.v7anyu3.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(function(){
     console.log("connected to db")
@@ -25,6 +25,7 @@ app.post("/sendmail", async function(req,res){
     var msg = req.body.msg
     var emailList = req.body.emailList
     console.log(msg)
+    console.log(emailList)
     // console.log(emailList)
 
     credential.find().then(function(data){
@@ -36,6 +37,7 @@ app.post("/sendmail", async function(req,res){
 
         if (!user || !pass) {
             console.log("Missing user or pass in MongoDB data");
+            console.log("check error")
             return res.send(false);
         }
      
